@@ -1,182 +1,117 @@
-import React from "react";
+// eslint-disable-next-line no-use-before-define
+import React, {useState, useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import { Redirect, Router } from "react-router-dom";
 import axios from "axios";
 import "antd/dist/antd.css";
 
 import "./index.css";
-import { Spin, Form, Input, Typography } from "antd";
-import { Button } from "shards-react";
+import {Form, Button, Input, Typography } from "antd";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
-import { msgSuccess, msgError } from "../../utils/Helper";
 import Paragraph from "antd/lib/typography/Paragraph";
 
 import "../../utils/EndPoint";
 import "../../utils/Axios";
-import { Redirect, Router } from "react-router-dom";
 
-import { connect } from "react-redux";
-import { addAuthAction } from "../../redux/AuthAction";
-import store from "../../redux/Store";
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentView: "logIn",
-      email: "",
-      password: "",
-      remember_token: "",
-      loading: false,
-      user: [],
-      register: []
-    };
-  }
-
-  viewLoading() {
-    this.setState({ loading: true });
-  }
-
-  hideLoading() {
-    this.setState({ loading: false });
-  }
-
-  changeView = view => {
-    this.setState({
-      currentView: view
+const Login = props => {
+    const [state, setState] = useState({
+        currentView: "logIn",
+        email: "moderator@gmail.com",
+        password: "secret",
+        remember_token: "",
+        loading: false,
+        user: [],
+        register: [],
+        isLogin: false,
     });
-  };
-
-  currentView = () => {
+    const stateRedux     = useSelector(state => state);
+    const dispatch  = useDispatch();
     const { Title } = Typography;
-    // login the user
+
+
+    useEffect(() => {
+      console.log('length'+ stateRedux.auth.length);
+    }, [stateRedux]);
+
     const handleSubmit = async values => {
-      this.viewLoading();
-      // send the username and password to the server
-      axios
-        .post(global.config.authLogin, values)
-        .then(response => {
-          this.setState({
-            user: response.data.data
+      console.log('submit login');
+        axios
+          .post(global.config.authLogin, {email: state.email, password: state.password})
+          .then(response => {
+            const data = response.data.data;
+
+            const sendData = {
+              ...data, 
+              isLogin: true,
+            }
+
+            setState({
+                ...state,
+                user: data.user,
+                isLogin: true,
+            });
+            
+            dispatch({type: 'ADD', payload: sendData});
+
+            console.log(stateRedux.auth);
+          })
+          .catch(e => {
+              console.log(e);
           });
-          this.props.user(response.data.data); // store to redux
-          this.hideLoading();
-          msgSuccess("Berhasil Login");
-        })
-        .catch(e => {
-          const { response } = e;
-          const { request, ...errorObject } = response;
+      };
+      const onFinishFailed = errorInfo => {
+        console.log("Failed:", errorInfo);
+      };
+      
+      if(stateRedux.auth.length != 0) {
+        return <Redirect to="/barang" />;
+      }
 
-          this.hideLoading();
-          console.log("error", response);
-          console.log("errorObject", errorObject);
-
-          if (response.data.isActive === "FALSE") {
-            msgError("Error Login user is not active", e);
-          } else {
-            msgError("Error Login ", e);
-          }
-        });
-    };
-
-    const onFinishFailed = errorInfo => {
-      console.log("Failed:", errorInfo);
-    };
-
-    switch (this.state.currentView) {
-      case "logIn":
-        return (
-          <Form
-            name="normal_login"
-            className="login-form"
-            initialValues={{
-              remember: true
-            }}
-            onFinish={handleSubmit}
-            onFinishFailed={onFinishFailed}
-          >
-            <Title level={3}>Login</Title>
-            <Paragraph>Selamat Datang di Mebel Apps</Paragraph>
-            <Form.Item
-              name="email"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Email!"
-                }
-              ]}
-            >
-              <Input
-                prefix={<MailOutlined className="site-form-item-icon" />}
-                placeholder="Email"
-              />
-            </Form.Item>
-            <Form.Item
-              name="password"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Password!"
-                }
-              ]}
-            >
-              <Input.Password
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                type="password"
-                placeholder="Password"
-              />
-            </Form.Item>
-            <Form.Item>
-              <Button
-                type="primary"
-                htmltype="submit"
-                className="login-form-button"
-                block
-              >
-                Log in
-              </Button>
-            </Form.Item>
-          </Form>
-        );
-      default:
-        break;
-    }
-  };
-
-  render() {
-    // let { user } = this.state;
-
-    // if (user.length !== 0) {
-    //   console.log("after login", user);
-    // if there's a user show the message below
-    // return <Redirect to="/barang-monitor" />;
-    // }
-
-    // Redirect to login if no user
-    const user = store.getState().auth;
-
-    if (user.length !== 0) {
-      console.log("after login", user);
-      // return <Redirect to="/barang-monitor" />;
-    }
     return (
-      <Spin spinning={this.state.loading}>
-        <section id="entry-page">{this.currentView()}</section>
-      </Spin>
-    );
-  }
+        <Form
+          name="normal_login"
+          className="login-form"
+          initialValue={{
+            remember: true
+          }}
+          onFinish={handleSubmit}
+          onFinishFailed={onFinishFailed}
+        >
+          <Title level={3}>Login</Title>
+          <Paragraph>Selamat Datang di Mebel Apps</Paragraph>
+          <Form.Item
+            name="email"
+          >
+            <Input
+                defaultValue={state.email}
+              prefix={<MailOutlined className="site-form-item-icon" />}
+              placeholder="Email"
+            />
+          </Form.Item>
+          <Form.Item
+            name="password"
+          >
+            <Input.Password
+                defaultValue={state.password}
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="Password"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmltype="submit"
+              className="login-form-button"
+              block
+              onClick={handleSubmit}
+            >
+              Log in
+            </Button>
+          </Form.Item>
+        </Form>
+      );
 }
-const mapStateToProps = state => {
-  return {
-    user: state
-  };
-};
 
-const mapDispatchToProps = dispatch => {
-  return {
-    user: res => {
-      dispatch(addAuthAction(res));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
-// export default Login;
+export default Login;

@@ -1,50 +1,51 @@
 {
-  "name": "mebel-apps",
-  "version": "1.0.0",
-  "private": true,
-  "homepage": "./",
-  "dependencies": {
-    "antd": "^4.6.5",
-    "axios": "^0.19.2",
-    "camelize": "^1.0.0",
-    "chart.js": "^2.7.3",
-    "classnames": "^2.2.6",
-    "cross-env": "^5.2.0",
-    "dateformat": "^3.0.3",
-    "flux": "^3.1.3",
-    "lodash.find": "^4.6.0",
-    "rc-queue-anim": "^1.8.5",
-    "rc-tween-one": "^2.7.3",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "react-ga": "^2.5.6",
-    "react-highlight-words": "^0.16.0",
-    "react-idle-timer": "^4.3.7",
-    "react-quill": "^1.3.3",
-    "react-redux": "^7.2.2",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "2.1.1",
-    "redux": "^4.0.5",
-    "shards-react": "^1.0.0",
-    "shortid": "^2.2.14"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build:prod": "cross-env REACT_APP_BASENAME=/mebel-apps REACT_APP_GAID=UA-97555486-2 npm run build",
-    "build": "cross-env REACT_APP_BASENAME=/mebel-apps react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
-  "devDependencies": {
-    "@ant-design/icons": "^4.2.2"
-  }
+    "name": "mebel-apps",
+    "version": "1.0.0",
+    "private": true,
+    "homepage": "./",
+    "dependencies": {
+        "antd": "^4.6.5",
+        "axios": "^0.19.2",
+        "camelize": "^1.0.0",
+        "chart.js": "^2.7.3",
+        "classnames": "^2.2.6",
+        "cross-env": "^5.2.0",
+        "dateformat": "^3.0.3",
+        "flux": "^3.1.3",
+        "lodash.find": "^4.6.0",
+        "rc-queue-anim": "^1.8.5",
+        "rc-tween-one": "^2.7.3",
+        "react": "^16.6.3",
+        "react-dom": "^16.6.3",
+        "react-ga": "^2.5.6",
+        "react-highlight-words": "^0.16.0",
+        "react-idle-timer": "^4.3.7",
+        "react-quill": "^1.3.3",
+        "react-redux": "^7.2.2",
+        "react-router-dom": "^5.2.0",
+        "react-scripts": "2.1.1",
+        "redux": "^4.0.5",
+        "shards-react": "^1.0.0",
+        "shortid": "^2.2.14"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build:prod": "cross-env REACT_APP_BASENAME=/mebel-apps REACT_APP_GAID=UA-97555486-2 npm run build",
+        "build": "cross-env REACT_APP_BASENAME=/mebel-apps react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": "react-app",
+        "no-unused-vars": "off"
+    },
+    "browserslist": [
+        ">0.2%",
+        "not dead",
+        "not ie <= 11",
+        "not op_mini all"
+    ],
+    "devDependencies": {
+        "@ant-design/icons": "^4.2.2"
+    }
 }
