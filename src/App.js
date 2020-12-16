@@ -105,9 +105,9 @@ const App = props => {
             exact
             component={withTracker(props => {
               return (
-                // <DefaultLayout {...props}>
-                <MonitorBarang {...props} />
-                // </DefaultLayout>
+                <DefaultLayout {...props}>
+                  <MonitorBarang {...props} />
+                </DefaultLayout>
               );
             })}
           />

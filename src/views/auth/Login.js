@@ -6,7 +6,8 @@ import axios from "axios";
 import "antd/dist/antd.css";
 
 import "./index.css";
-import { Form, Button, Input, Typography, Spin } from "antd";
+import { Form, Input, Typography, Spin } from "antd";
+import { Button } from "shards-react";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import Paragraph from "antd/lib/typography/Paragraph";
 
@@ -151,7 +152,6 @@ const Login = props => {
                 htmltype="submit"
                 className="login-form-button"
                 block
-                onClick={handleSubmit}
               >
                 Log in
               </Button>
