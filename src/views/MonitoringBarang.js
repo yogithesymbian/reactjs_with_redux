@@ -18,7 +18,7 @@ import {
 import Highlighter from "react-highlight-words";
 import { SearchOutlined, AppleOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
-import "../utils/EndPoint";
+import "../utils/dist/EndPoint.dev";
 import axios from "../utils/Axios";
 import "./auth/Login";
 import PropTypes from "prop-types";

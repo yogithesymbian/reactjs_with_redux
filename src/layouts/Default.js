@@ -62,14 +62,14 @@ class DefaultLayout extends React.Component {
   }
 
   componentDidMount() {
-    const userGet = localStorage.getItem("user");
-    const user = JSON.parse(userGet);
-    if (user) {
-      this.setState({
-        user: user.data.user
-      });
-      this.handleElement();
-    } else window.location.reload();
+    // const userGet = localStorage.getItem("user");
+    // const user = JSON.parse(userGet);
+    // if (user) {
+    //   this.setState({
+    //     user: user.data.user
+    //   });
+    this.handleElement();
+    // } else window.location.reload();
   }
   onChange() {
     this.setState({
@@ -161,9 +161,9 @@ class DefaultLayout extends React.Component {
   handleOnIdle(event) {
     // console.log("user is idle", event);
     // console.log("last active", this.idleTimer.getLastActiveTime());
-    localStorage.clear();
-    window.location.reload();
-    return <Redirect to="/login" />;
+    // localStorage.clear();
+    // window.location.reload();
+    // return <Redirect to="/login" />;
   }
 }
 
