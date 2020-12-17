@@ -6,20 +6,19 @@ import axios from "axios";
 import "antd/dist/antd.css";
 
 import "./index.css";
-import { Form, Input, Typography, Spin } from "antd";
-import { Button } from "shards-react";
+import { Button, Form, Input, Typography, Spin } from "antd";
+import {} from "shards-react";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import Paragraph from "antd/lib/typography/Paragraph";
 
 import "../../utils/dist/EndPoint.dev";
 import "../../utils/Axios";
+import { addAuthAction } from "../../redux/AuthAction";
 import { msgError, msgSuccess } from "../../utils/Helper";
 
 const Login = props => {
   const [state, setState] = useState({
     currentView: "logIn",
-    email: "moderator@gmail.com",
-    password: "secret",
     remember_token: "",
     loading: false,
     user: [],
@@ -47,7 +46,7 @@ const Login = props => {
   const { Title } = Typography;
 
   useEffect(() => {
-    console.log("length" + stateRedux.auth.length);
+    // console.log("length" + stateRedux.auth.length);
   }, [stateRedux]);
 
   if (stateRedux.auth.length != 0) {
@@ -74,8 +73,8 @@ const Login = props => {
             isLogin: true
           });
 
-          dispatch({ type: "ADD", payload: sendData });
-
+          dispatch(addAuthAction(sendData));
+          // dispatch({ type: "ADD", payload: sendData });
           console.log(stateRedux.auth);
           hideLoading();
           msgSuccess("Berhasil Login");
@@ -135,13 +134,17 @@ const Login = props => {
               />
             </Form.Item>
             <Form.Item>
-              <Button
+              {/* <Button
                 type="primary"
                 htmltype="submit"
                 className="login-form-button"
                 block
               >
                 Log in
+              </Button> */}
+              <Button type="primary" htmlType="submit" block>
+                Log in
+                {""}
               </Button>
             </Form.Item>
           </Form>

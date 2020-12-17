@@ -3,23 +3,13 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
-  BrowserRouter as Router,
+  MemoryRouter as Router,
   Route,
   Switch,
   Redirect
 } from "react-router-dom";
-
 import routes from "./routes";
 import withTracker from "./withTracker";
-
-// Route Views
-import MonitorBarang from "./views/MonitoringBarang";
-import Barang from "./views/Barang";
-import Login from "./views/auth/Login";
-
-// Layout Types
-import { DefaultLayout } from "./layouts";
-import { AuthLayout } from "./layouts-auth";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./shards-dashboard/styles/shards-dashboards.1.1.0.min.css";
@@ -29,7 +19,7 @@ const App = props => {
   const state = useSelector(state => state);
 
   useEffect(() => {
-    console.log("length" + state.auth.length);
+    // console.log("length " + state.auth.length);
   }, [state]);
 
   const ProtectedRoute = ({ component: Comp, loggedIn, path, ...rest }) => {
@@ -87,40 +77,28 @@ const App = props => {
 
   return (
     <div>
-      <Router>
+      <Router basename={process.env.REACT_APP_BASENAME || ""}>
         <Switch>
-          <Route
-            path="/"
-            exact
-            component={withTracker(props => {
+          <div>
+            {routes.map((route, index) => {
               return (
-                <AuthLayout {...props}>
-                  <Login {...props} />
-                </AuthLayout>
+                <>
+                  <Route
+                    key={index}
+                    path={route.path}
+                    exact={route.exact}
+                    component={withTracker(props => {
+                      return (
+                        <route.layout {...props}>
+                          <route.component {...props} />
+                        </route.layout>
+                      );
+                    })}
+                  />
+                </>
               );
             })}
-          />
-          <Route
-            path="/barang-monitor"
-            exact
-            component={withTracker(props => {
-              return (
-                <DefaultLayout {...props}>
-                  <MonitorBarang {...props} />
-                </DefaultLayout>
-              );
-            })}
-          />
-          {/* <ProtectedRouteLogin
-                        path="/"
-                        loggedIn={state.auth.length == 0 ? false : state.auth[0].isLogin}
-                        component={Login}
-                    />
-                    <ProtectedRoute
-                        path="/barang"
-                        loggedIn={state.auth.length == 0 ? false : state.auth[0].isLogin}
-                        component={Barang}
-                    /> */}
+          </div>
         </Switch>
       </Router>
     </div>

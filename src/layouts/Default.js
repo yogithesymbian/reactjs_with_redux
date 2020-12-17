@@ -62,14 +62,7 @@ class DefaultLayout extends React.Component {
   }
 
   componentDidMount() {
-    // const userGet = localStorage.getItem("user");
-    // const user = JSON.parse(userGet);
-    // if (user) {
-    //   this.setState({
-    //     user: user.data.user
-    //   });
     this.handleElement();
-    // } else window.location.reload();
   }
   onChange() {
     this.setState({
@@ -123,7 +116,7 @@ class DefaultLayout extends React.Component {
                   style={{ float: "right", marginRight: "32px" }}
                 >
                   <div>
-                    <HeaderMenu datauser={this.state.user} />
+                    <HeaderMenu />
                   </div>
                 </Menu>
               </Header>
@@ -156,16 +149,16 @@ class DefaultLayout extends React.Component {
   }
 
   handleOnActive(event) {
-    // console.log("user is active", event);
-    // console.log("time remaining", this.idleTimer.getRemainingTime());
+    console.log("user is active", event);
+    console.log("time remaining", this.idleTimer.getRemainingTime());
   }
 
   handleOnIdle(event) {
-    // console.log("user is idle", event);
-    // console.log("last active", this.idleTimer.getLastActiveTime());
+    console.log("user is idle", event);
+    console.log("last active", this.idleTimer.getLastActiveTime());
     // localStorage.clear();
     // window.location.reload();
-    // return <Redirect to="/login" />;
+    return <Redirect to="/login" />;
   }
 }
 

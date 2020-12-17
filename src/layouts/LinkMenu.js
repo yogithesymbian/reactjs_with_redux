@@ -1,20 +1,7 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Menu } from "antd";
-import {
-  HomeFilled,
-  CoffeeOutlined,
-  BookFilled,
-  PropertySafetyFilled,
-  SlidersFilled,
-  AmazonSquareFilled,
-  FileFilled,
-  MonitorOutlined,
-  MoneyCollectOutlined,
-  WalletFilled,
-  WalletOutlined,
-  AccountBookFilled
-} from "@ant-design/icons";
+import { HomeFilled, FileFilled, MonitorOutlined } from "@ant-design/icons";
 const { SubMenu } = Menu;
 
 const Linkmenu = withRouter(props => {

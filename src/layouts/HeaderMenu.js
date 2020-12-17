@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { withRouter, Redirect } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
 import { Menu, Dropdown, message } from "antd";
 
 import {
@@ -11,29 +13,20 @@ import {
 const { SubMenu } = Menu;
 
 const HeaderMenu = withRouter(props => {
-  // const { location } = props;
-  const { datauser } = props;
+  const state = useSelector(state => state);
 
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [user, setUser] = useState();
-
-  const onClick = ({ key }) => {
-    message.info(`Click on item ${key}`);
-  };
+  useEffect(() => {
+    // console.log("length " + state.auth.length);
+  }, [state]);
 
   // logout the user
   const handleLogout = () => {
-    // setUser({});
-    // setEmail("");
-    // setPassword("");
-    // localStorage.clear();
-    // window.location.reload();
+    window.location.reload();
     // return <Redirect to="/login" />;
   };
 
   const menu = (
-    <Menu onClick={onClick}>
+    <Menu>
       <Menu.Item key="1" onClick={handleLogout}>
         <LogoutOutlined
           style={{ display: "inline-block", verticalAlign: "middle" }}
@@ -48,7 +41,7 @@ const HeaderMenu = withRouter(props => {
   return (
     <Dropdown overlay={menu}>
       <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-        <AccountBookFilled /> <span>Hello , </span>
+        <AccountBookFilled /> <span>Hello , {state.auth[0].user.name}</span>
         <DownCircleOutlined />
       </a>
     </Dropdown>
