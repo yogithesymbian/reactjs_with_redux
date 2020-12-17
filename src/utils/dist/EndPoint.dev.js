@@ -1,41 +1,9 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-
-var _Store = _interopRequireDefault(require("../redux/Store"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-// var api = "http://y.id:8000/";
+var api = "http://y.id:8000/";
 // var api = "http://192.168.43.140:8000/";
-var api = "http://47.254.248.35/api/api-mebel-apps/public/"; // var api = "http://api.belanjamalang.com/public/";
-// LOCAL STORAGE JWT
-// var authorization = JSON.parse(localStorage.getItem("user"));
-// if (authorization === null) {
-//   authorization = "abc";
-// } else {
-//   authorization = authorization.data.api_token;
-// }
-// REDUX JWT
+// var api = "http://47.254.248.35/api/api-mebel-apps/public/";
+// var api = "http://api.belanjamalang.com/public/";
 
-var authorization = _Store["default"].getState().auth;
-
-console.log("reduxAuth outer", authorization);
-
-if (authorization.length !== 0) {
-  authorization = authorization[0].api_token;
-  console.log("reduxAuth", authorization);
-} else {
-  authorization = "abc";
-  console.log("reduxAuth", authorization);
-}
-
-var _default = global.config = {
-  bearer: authorization,
-  // Header JWT
+var _default = (global.config = {
   endPoint: api,
   authLogin: api + "login",
   authRegister: api + "register",
@@ -66,6 +34,6 @@ var _default = global.config = {
   update_brg: api + "barang/all/update",
   delete_brg: api + "barang/all/delete",
   actUploadImg: api + "act-post-img"
-};
+});
 
 exports["default"] = _default;

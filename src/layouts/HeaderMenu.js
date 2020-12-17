@@ -12,7 +12,7 @@ const { SubMenu } = Menu;
 
 const HeaderMenu = withRouter(props => {
   // const { location } = props;
-  // const { datauser } = props;
+  const { datauser } = props;
 
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
@@ -47,10 +47,10 @@ const HeaderMenu = withRouter(props => {
 
   return (
     <Dropdown overlay={menu}>
-      {/* <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-        <AccountBookFilled /> <span>Hello , {datauser.name}</span>
+      <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+        <AccountBookFilled /> <span>Hello , </span>
         <DownCircleOutlined />
-      </a> */}
+      </a>
     </Dropdown>
   );
 });

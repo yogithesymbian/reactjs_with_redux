@@ -122,7 +122,9 @@ class DefaultLayout extends React.Component {
                   mode="horizontal"
                   style={{ float: "right", marginRight: "32px" }}
                 >
-                  <HeaderMenu datauser={this.state.user} />
+                  <div>
+                    <HeaderMenu datauser={this.state.user} />
+                  </div>
                 </Menu>
               </Header>
               <Content style={{ margin: "0 16px" }}>

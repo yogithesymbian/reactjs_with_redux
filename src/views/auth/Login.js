@@ -59,10 +59,7 @@ const Login = props => {
       viewLoading();
       console.log("submit login");
       axios
-        .post(global.config.authLogin, {
-          email: state.email,
-          password: state.password
-        })
+        .post(global.config.authLogin, values)
         .then(response => {
           const data = response.data.data;
 
@@ -80,22 +77,13 @@ const Login = props => {
           dispatch({ type: "ADD", payload: sendData });
 
           console.log(stateRedux.auth);
-          this.hideLoading();
+          hideLoading();
           msgSuccess("Berhasil Login");
         })
         .catch(e => {
-          const { response } = e;
-          const { request, ...errorObject } = response;
-
           hideLoading();
-          console.log("error", response);
-          console.log("errorObject", errorObject);
-
-          if (response.data.isActive === "FALSE") {
-            msgError("Error Login user is not active", e);
-          } else {
-            msgError("Error Login ", e);
-          }
+          msgError("Error Login ", e);
+          console.log(e);
         });
     };
 
