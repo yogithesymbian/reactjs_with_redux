@@ -41,7 +41,8 @@ const HeaderMenu = withRouter(props => {
   return (
     <Dropdown overlay={menu}>
       <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-        <AccountBookFilled /> <span>Hello , {state.auth[0].user.name}</span>
+        <AccountBookFilled /> <span>Hello , </span>
+        {/* {state.auth[0].user.name} */}
         <DownCircleOutlined />
       </a>
     </Dropdown>

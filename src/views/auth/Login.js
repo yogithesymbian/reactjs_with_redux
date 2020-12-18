@@ -50,7 +50,7 @@ const Login = props => {
   }, [stateRedux]);
 
   if (stateRedux.auth.length != 0) {
-    return <Redirect to="/barang-monitor" />;
+    return <Redirect to="/kategori" />;
   }
 
   const currentView = () => {

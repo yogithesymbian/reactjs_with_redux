@@ -23,6 +23,7 @@ import axios from "../utils/Axios";
 import "./auth/Login";
 import PropTypes from "prop-types";
 import { TweenOneGroup } from "rc-tween-one";
+import store from "../redux/Store";
 
 const TableContext = React.createContext(false);
 
@@ -462,6 +463,13 @@ class MonitorBarang extends React.Component {
       if (dtMonitorBarang[0] !== undefined) {
         JUMLAH_MONITORING = "JUMLAH = " + dtMonitorBarang[0].JUMLAH;
       }
+    }
+
+    const user = store.getState().auth;
+
+    if (user.length !== 0) {
+      console.log("after login", user);
+      // return <Redirect to="/barang-monitor" />;
     }
 
     return (

@@ -7,6 +7,8 @@ import { AuthLayout } from "./layouts-auth";
 
 // Route Views
 import MonitorBarang from "./views/MonitoringBarang";
+import Barang from "./views/Barang";
+import Kategori from "./views/Kategori";
 
 import Errors from "./views/Errors";
 
@@ -27,6 +29,16 @@ export default [
     path: "/barang-monitor",
     layout: DefaultLayout,
     component: MonitorBarang
+  },
+  {
+    path: "/barang",
+    layout: DefaultLayout,
+    component: Barang
+  },
+  {
+    path: "/kategori",
+    layout: DefaultLayout,
+    component: Kategori
   },
   {
     path: "/errors",

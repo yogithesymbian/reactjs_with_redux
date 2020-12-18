@@ -1,7 +1,7 @@
-var api = "http://y.id:8000/";
+// var api = "http://y.id:8000/";
 // var api = "http://192.168.43.140:8000/";
 // var api = "http://47.254.248.35/api/api-mebel-apps/public/";
-// var api = "http://api.belanjamalang.com/public/";
+var api = "http://47.254.248.35/api/api-malang-apps/public/";
 
 var _default = (global.config = {
   endPoint: api,
@@ -33,7 +33,12 @@ var _default = (global.config = {
   input_brg: api + "barang/all/input",
   update_brg: api + "barang/all/update",
   delete_brg: api + "barang/all/delete",
-  actUploadImg: api + "act-post-img"
+  actUploadImg: api + "act-post-img",
+
+  // other source
+  shCategory: api + "show-kategori",
+  actCategory: api + "category",
+  actSliderImg: api + "act-slider-img"
 });
 
 exports["default"] = _default;

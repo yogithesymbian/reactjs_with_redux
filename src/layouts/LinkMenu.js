@@ -27,8 +27,14 @@ const Linkmenu = withRouter(props => {
         }
         icon={<FileFilled />}
       >
+        <Menu.Item key="/barang" icon={<MonitorOutlined />}>
+          <Link to="barang">Barang</Link>
+        </Menu.Item>
         <Menu.Item key="/barang-monitor" icon={<MonitorOutlined />}>
           <Link to="barang-monitor">Monitoring</Link>
+        </Menu.Item>
+        <Menu.Item key="/kategori" icon={<MonitorOutlined />}>
+          <Link to="kategori">Kategori</Link>
         </Menu.Item>
       </SubMenu>
       {/* <Menu.Item key="/malang-free-coffee" icon={<CoffeeOutlined />}>
