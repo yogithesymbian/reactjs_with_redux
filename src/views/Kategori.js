@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useReducer } from "react";
 import {
   Table,
   Input,
@@ -65,18 +65,6 @@ const Content = ({ children, extraContent }) => {
   );
 };
 // end of pageheader
-const props = {
-  name: "image",
-  action: global.config.actSliderImg,
-  progress: {
-    strokeColor: {
-      "0%": "#108ee9",
-      "100%": "#87d068"
-    },
-    strokeWidth: 3,
-    format: percent => `${parseFloat(percent.toFixed(2))}%`
-  }
-};
 
 const Kategori = () => {
   const [state, setState] = useState({
@@ -88,16 +76,17 @@ const Kategori = () => {
   const [sRT, Srt] = useState("");
   const [searchInput, SearchInput] = useState("");
 
+  // table
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
 
+  // image
   const [fileList, setFileList] = useState([]);
   const [previewImage, spreviewImage] = useState("");
   const [previewVisible, spreviewVisible] = useState(Boolean);
   const [previewTitle, spreviewTitle] = useState("");
 
-  const isEditing = record => record.id === editingKey;
-
+  // search tables
   const getColumnSearchProps = dataIndex => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -181,7 +170,21 @@ const Kategori = () => {
   // end of search tables
 
   // handle get categoryData
+  const getCategory = () => {
+    axios
+      .get(global.config.shCategory) // home
+      .then(response => {
+        setState({
+          categoryData: response.data.data.show_kategori
+        });
+      })
+      .catch(e => {
+        console.log("error", e);
+      });
+  };
+  // end of handle get categoryData
 
+  // table columns
   const columns = [
     {
       key: "1",
@@ -281,19 +284,54 @@ const Kategori = () => {
     };
   });
 
-  const getCategory = () => {
-    axios
-      .get(global.config.shCategory) // home
-      .then(response => {
-        setState({
-          categoryData: response.data.data.show_kategori
-        });
-      })
-      .catch(e => {
-        console.log("error", e);
-      });
+  const EditableCell = ({
+    editing,
+    dataIndex,
+    title,
+    inputType,
+    record,
+    index,
+    children,
+    ...restProps
+  }) => {
+    const inputNode =
+      dataIndex === "img" ? (
+        <>
+          <Upload
+            {...props}
+            listType="picture-card"
+            fileList={fileList}
+            onChange={onChange}
+            onPreview={onPreview}
+          >
+            {fileList.length < 1 && "+ Upload"}
+          </Upload>
+        </>
+      ) : (
+        <Input />
+      );
+    return (
+      <>
+        <td {...restProps} editable="true">
+          {editing ? (
+            <Form.Item
+              name={dataIndex}
+              style={{
+                margin: 0
+              }}
+            >
+              {inputNode}
+            </Form.Item>
+          ) : (
+            children
+          )}
+        </td>
+      </>
+    );
   };
-  // end of handle get categoryData
+
+  // table action
+  const isEditing = record => record.id === editingKey;
 
   const edit = record => {
     form.setFieldsValue({
@@ -308,8 +346,6 @@ const Kategori = () => {
   const cancel = () => {
     setEditingKey("");
   };
-
-  const handleCancel = () => spreviewVisible(false);
 
   const save = async key => {
     try {
@@ -354,7 +390,7 @@ const Kategori = () => {
     }
   };
 
-  // table
+  // image action
   const onPreview = async file => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
@@ -367,7 +403,10 @@ const Kategori = () => {
     );
   };
 
+  const handleCancel = () => spreviewVisible(false);
+
   const onChange = ({ fileList: newFileList }) => {
+    console.log("onChange");
     setFileList(newFileList);
     if (newFileList.length >= 1) {
       if (newFileList[0].status === "done") {
@@ -376,89 +415,38 @@ const Kategori = () => {
     }
   };
 
-  const EditableCell = ({
-    editing,
-    dataIndex,
-    title,
-    inputType,
-    record,
-    index,
-    children,
-    ...restProps
-  }) => {
-    const inputNode =
-      dataIndex === "img" ? (
-        <>
-          <Upload
-            {...props}
-            listType="picture-card"
-            fileList={fileList}
-            onChange={onChange}
-            onPreview={onPreview}
-          >
-            {fileList.length < 1 && "+ Upload"}
-          </Upload>
-        </>
-      ) : (
-        <Input />
-      );
-    return (
-      <>
-        <td {...restProps} editable="true">
-          {editing ? (
-            <Form.Item
-              name={dataIndex}
-              style={{
-                margin: 0
-              }}
-              // rules={[
-              //   {
-              //     required: true,
-              //     message: `Please Input ${title}!`
-              //   }
-              // ]}
-            >
-              {inputNode}
-            </Form.Item>
-          ) : (
-            children
-          )}
-        </td>
-      </>
-    );
+  // image uploading
+  const props = {
+    name: "image",
+    action: global.config.actSliderImg,
+    progress: {
+      strokeColor: {
+        "0%": "#108ee9",
+        "100%": "#87d068"
+      },
+      strokeWidth: 3,
+      format: percent => `${parseFloat(percent.toFixed(2))}%`
+    }
   };
+  // end of image uploading
+
+  // const mounted = useRef(false);
   useEffect(() => {
-    // console.log("length" + fileList.length);
-    // const cancelToken = axios.CancelToken;
-    // const source = cancelToken.source();
-    // return () => {
-    //   source.cancel("axios request cancelled");
-    // };
+    // mounted.current = true;
+
+    // setTimeout(() => {
+    //   if (mounted.current) {
+    //     setIsLoading(false);
+    //   }
+    // }, 1000);
+
     console.log("length", fileList);
     getCategory();
-    // return () => {
-    //   // setFileList({});
-    //   setCategoryData({});
-    //   setFileList({});
-    //   spreviewImage({});
-    //   spreviewVisible({});
-    //   spreviewTitle({});
-    // };
-    // return () => {};
-    // function handleStatusChange(status) {
-    //   setIsOnline(status.isOnline);
-    // }
-    // ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
-    // Specify how to clean up after this effect:
-    // fileList = fileList;
-    // return function cleanup() {
-    //   // setFileList([]);
-    //   // ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
-    // };
-    // return () => (
 
-    // );
-  }, [fileList, props]);
+    // return function cleanup() {
+    //   mounted.current = false;
+    // };
+  }, [fileList]);
 
   // end of table
   return (
@@ -488,7 +476,7 @@ const Kategori = () => {
             <Table
               key={0}
               components={{
-                key: 0,
+                key: 1,
                 body: {
                   cell: EditableCell
                 }
