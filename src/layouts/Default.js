@@ -157,7 +157,7 @@ class DefaultLayout extends React.Component {
     console.log("user is idle", event);
     console.log("last active", this.idleTimer.getLastActiveTime());
     // localStorage.clear();
-    // window.location.reload();
+    window.location.reload();
     return <Redirect to="/login" />;
   }
 }
