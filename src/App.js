@@ -1,13 +1,7 @@
 // eslint-disable-next-line no-use-before-define
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
 
-import {
-  MemoryRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from "react-router-dom";
+import { MemoryRouter as Router, Route, Switch } from "react-router-dom";
 import routes from "./routes";
 import withTracker from "./withTracker";
 
@@ -16,12 +10,21 @@ import "./shards-dashboard/styles/shards-dashboards.1.1.0.min.css";
 import "antd/dist/antd.css";
 
 const App = () => {
+  const [route, setRoutes] = useState([]);
+
+  useEffect(() => {
+    setRoutes(routes);
+    return () => {
+      setRoutes([]);
+    };
+  }, [route]);
+
   return (
     <>
       <Router basename={process.env.REACT_APP_BASENAME || ""}>
         <Switch>
           <>
-            {routes.map((route, index) => {
+            {route.map((route, index) => {
               return (
                 <>
                   <Route

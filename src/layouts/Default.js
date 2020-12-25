@@ -53,15 +53,12 @@ class DefaultLayout extends React.Component {
     });
   }
 
-  componentWillMount() {
-    Store.addChangeListener(this.onChange);
-  }
-
   componentWillUnmount() {
     Store.removeChangeListener(this.onChange);
   }
 
   componentDidMount() {
+    Store.addChangeListener(this.onChange);
     this.handleElement();
   }
   onChange() {
