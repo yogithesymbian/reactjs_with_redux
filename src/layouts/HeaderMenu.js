@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { withRouter, Redirect } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import { Menu, Dropdown, message } from "antd";
+import { Menu, Dropdown } from "antd";
 
 import {
   DownCircleOutlined,
@@ -10,7 +10,7 @@ import {
   AccountBookFilled
 } from "@ant-design/icons";
 
-const { SubMenu } = Menu;
+// const { SubMenu } = Menu;
 
 const HeaderMenu = withRouter(props => {
   const state = useSelector(state => state);

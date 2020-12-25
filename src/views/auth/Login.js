@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-use-before-define
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Redirect, Router } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 import "antd/dist/antd.css";
 
@@ -11,12 +11,12 @@ import {} from "shards-react";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import Paragraph from "antd/lib/typography/Paragraph";
 
-import "../../utils/dist/EndPoint.dev";
+import "../../utils/EndPoint";
 import "../../utils/Axios";
 import { addAuthAction } from "../../redux/AuthAction";
 import { msgError, msgSuccess } from "../../utils/Helper";
 
-const Login = props => {
+const Login = () => {
   const [state, setState] = useState({
     currentView: "logIn",
     remember_token: "",
@@ -28,16 +28,19 @@ const Login = props => {
 
   const changeView = view => {
     setState({
+      ...state,
       currentView: view
     });
   };
   const viewLoading = () => {
     setState({
+      ...state,
       loading: true
     });
   };
   const hideLoading = () => {
     setState({
+      ...state,
       loading: false
     });
   };
@@ -46,14 +49,26 @@ const Login = props => {
   const { Title } = Typography;
 
   useEffect(() => {
-    // console.log("length" + stateRedux.auth.length);
+    console.log("length" + stateRedux.auth.length);
+    setState({
+      ...state
+    });
+    return () => {
+      setState({
+        ...state
+      });
+    };
   }, [stateRedux]);
 
-  if (stateRedux.auth.length != 0) {
-    return <Redirect to="/kategori" />;
+  if (stateRedux.auth.length !== 0) {
+    return (
+      <>
+        <Redirect to="/kategori" />
+      </>
+    );
   }
 
-  const currentView = () => {
+  const currentview = () => {
     const handleSubmit = async values => {
       viewLoading();
       console.log("submit login");
@@ -116,6 +131,7 @@ const Login = props => {
               <Input
                 prefix={<MailOutlined className="site-form-item-icon" />}
                 placeholder="Email"
+                autoComplete="username"
               />
             </Form.Item>
             <Form.Item
@@ -131,6 +147,7 @@ const Login = props => {
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
                 placeholder="Password"
+                autoComplete="current-password"
               />
             </Form.Item>
             <Form.Item>
@@ -155,8 +172,10 @@ const Login = props => {
   };
 
   return (
-    <Spin spinning={state.loading}>
-      <section id="entry-page">{currentView()}</section>
+    <Spin spinning={state.loading} key={0}>
+      <section id="entry-page" key={1}>
+        {currentview()}
+      </section>
     </Spin>
   );
 };

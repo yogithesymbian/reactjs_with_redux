@@ -1,5 +1,5 @@
 import axios from "axios";
-import "../utils/EndPoint";
+import "./EndPoint";
 
 var _Store = _interopRequireDefault(require("../redux/Store"));
 
